@@ -14,7 +14,7 @@ export function useStaggeredAnimation(
     if (isVisible) {
       const timeouts: NodeJS.Timeout[] = [];
 
-      animatedItems.forEach((_, index) => {
+      Array.from({ length: itemCount }).forEach((_, index) => {
         const timeout = setTimeout(() => {
           setAnimatedItems((prev) => {
             const next = [...prev];
@@ -30,7 +30,7 @@ export function useStaggeredAnimation(
     } else {
       setAnimatedItems(new Array(itemCount).fill(false));
     }
-  }, [isVisible, itemCount, baseDelay, staggerDelay, animatedItems]);
+  }, [isVisible, itemCount, baseDelay, staggerDelay]);
 
   return animatedItems;
 }
