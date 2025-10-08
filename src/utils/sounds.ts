@@ -1,14 +1,24 @@
 // Small utility to manage sound effects
-export const playSound = (frequency: number, duration: number, type: OscillatorType = 'sine', volume = 0.1) => {
-  const audioContext = new (window.AudioContext || (window as any).webkitAudioContext)();
+export const playSound = (
+  frequency: number,
+  duration: number,
+  type: OscillatorType = "sine",
+  volume = 0.1
+) => {
+  const audioContext = new (window.AudioContext ||
+    (window as typeof window & { webkitAudioContext?: typeof AudioContext })
+      .webkitAudioContext)();
   const oscillator = audioContext.createOscillator();
   const gainNode = audioContext.createGain();
 
   oscillator.type = type;
   oscillator.frequency.setValueAtTime(frequency, audioContext.currentTime);
-  
+
   gainNode.gain.setValueAtTime(volume, audioContext.currentTime);
-  gainNode.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + duration);
+  gainNode.gain.exponentialRampToValueAtTime(
+    0.001,
+    audioContext.currentTime + duration
+  );
 
   oscillator.connect(gainNode);
   gainNode.connect(audioContext.destination);
@@ -28,13 +38,13 @@ const getMajorScaleMultiplier = (position: number) => {
 
 // Predefined sound effects
 export const sounds = {
-  hover: () => playSound(440, 0.05, 'sine', 0.03),
-  buttonHover: () => playSound(880, 0.05, 'sine', 0.02),
-  open: () => playSound(330, 0.15, 'sine', 0.1),
-  close: () => playSound(220, 0.15, 'sine', 0.1),
+  hover: () => playSound(440, 0.05, "sine", 0.03),
+  buttonHover: () => playSound(880, 0.05, "sine", 0.02),
+  open: () => playSound(330, 0.15, "sine", 0.1),
+  close: () => playSound(220, 0.15, "sine", 0.1),
   // New function for playing notes in the scale
   playNote: (position: number) => {
     const frequency = baseFrequency * getMajorScaleMultiplier(position);
-    playSound(frequency, 0.1, 'sine', 0.05);
-  }
+    playSound(frequency, 0.1, "sine", 0.05);
+  },
 };
