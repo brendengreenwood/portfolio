@@ -10,12 +10,14 @@ import AIPrototypes from "./components/AIPrototypes";
 import FeaturedWork from "./components/FeaturedWork";
 import MyStack from "./components/MyStack";
 import CaseStudy from "./pages/CaseStudy";
+import PatternCreate from "./pages/PatternCreate";
 
 function App() {
   return (
     <Router>
       <Routes>
         <Route path="/case-study" element={<CaseStudy />} />
+        <Route path="/case-study/pattern-create" element={<PatternCreate />} />
         <Route
           path="/"
           element={
