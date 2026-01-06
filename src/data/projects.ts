@@ -3,6 +3,14 @@ import { Project } from '../types/project';
 export const aiProjects: Project[] = [
   {
     type: "AI Prototype",
+    title: "Task Analyzer",
+    description: "Experimenting with chat assistant AI agents to analyze and break down complex tasks into actionable steps.",
+    image: "",
+    link: "https://task-analyzer-thing.netlify.app/",
+    date: "2024"
+  },
+  {
+    type: "AI Prototype",
     title: "Brendo UI",
     description: "Experimenting with AI-assisted component library development to create a unique and cohesive design system.",
     image: "",
@@ -34,6 +42,7 @@ export const featuredProjects: Project[] = [
     description: "Led UX design for Target's advertising command center, boosting efficiency by 500% through streamlined operations and user-centered design.",
     image: "/assets/cerebro-campaigns.png",
     link: "https://www.figma.com/proto/9C3IvxivUfBm0LMQ4U73rP/Case-Study?page-id=0%3A1&node-id=1-2&viewport=1295%2C254%2C0.25&t=vKZIZlgy07zHVF0d-1&scaling=contain",
+    wipLink: "/case-study/pattern-create",
     date: "2017-2023"
   },
   {
