@@ -50,6 +50,29 @@ export const timelineData: TimelineData[] = [
   },
   {
     type: "tag",
+    title: "CORE EXPERIENCE",
+    id: "core-experience-tag",
+  },
+  {
+    type: "item",
+    title: "Creating Ad Groups",
+    date: "Pattern Deep Dive",
+    id: "pattern-create",
+  },
+  {
+    type: "item",
+    title: "Editing Ad Groups",
+    date: "Pattern Deep Dive",
+    id: "pattern-edit",
+  },
+  {
+    type: "item",
+    title: "Managing Ad Groups",
+    date: "Pattern Deep Dive",
+    id: "pattern-manage",
+  },
+  {
+    type: "tag",
     title: "CONTINUOUS RELEASES",
     id: "continuous-releases-tag",
   },

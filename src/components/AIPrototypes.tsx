@@ -1,37 +1,38 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import IconCard from './IconCard';
-import { aiProjects } from '../data/projects';
-import { useStaggeredAnimation } from '../hooks/useStaggeredAnimation';
+import { motion } from "framer-motion";
+import { aiProjects } from "../data/projects";
 
 export default function AIPrototypes() {
-  const animatedItems = useStaggeredAnimation(true, aiProjects.length, 0.1);
-
   return (
     <section className="max-w-6xl mx-auto px-4 md:px-6">
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-        className="mb-6"
+      <motion.h2
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.4 }}
+        className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-6"
       >
-        <h2 className="text-lg font-semibold text-gray-900 mb-3">AI Code-assisted Prototypes</h2>
-        <p className="text-gray-700 leading-relaxed">
-          I've been experimenting with AI tools like Bolt.New to speed up prototyping and bridge design with development. 
-          Faster iteration, less grunt work—more time for the fun stuff.
-        </p>
-      </motion.div>
+        Vibe Coded Prototypes
+      </motion.h2>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div className="grid md:grid-cols-2 gap-4">
         {aiProjects.map((project, index) => (
-          <motion.div
+          <motion.a
             key={project.title}
-            initial={{ opacity: 0, x: 20 }}
-            animate={animatedItems[index] ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.3 }}
+            href={project.link}
+            target="_blank"
+            rel="noopener noreferrer"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.4, delay: index * 0.05 }}
+            className="group border border-gray-300 p-4 hover:border-gray-900 transition-colors"
           >
-            <IconCard {...project} />
-          </motion.div>
+            <div className="flex items-baseline justify-between mb-2">
+              <h3 className="font-semibold text-gray-900">{project.title}</h3>
+              <span className="text-xs text-gray-500 ml-4">2024</span>
+            </div>
+            <p className="text-sm text-gray-600 leading-relaxed">
+              {project.description}
+            </p>
+          </motion.a>
         ))}
       </div>
     </section>

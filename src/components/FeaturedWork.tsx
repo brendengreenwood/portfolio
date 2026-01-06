@@ -1,38 +1,75 @@
-import React from 'react';
 import { motion } from 'framer-motion';
-import FeatureCard from './FeatureCard';
 import { featuredProjects } from '../data/projects';
-import { useStaggeredAnimation } from '../hooks/useStaggeredAnimation';
 
 export default function FeaturedWork() {
-  const animatedItems = useStaggeredAnimation(true, featuredProjects.length, 0.1);
-
   return (
     <section className="max-w-6xl mx-auto px-4 md:px-6">
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-        className="mb-6"
+      <motion.h2
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.4 }}
+        className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-6"
       >
-        <h2 className="text-lg font-semibold text-gray-900 mb-3">Case Studies & Work Samples</h2>
-        <p className="text-gray-700 leading-relaxed">
-          Here's a look at some of my work, from tackling tricky design problems to creating solutions that make a difference. 
-          These case studies and examples give a glimpse into my process and the results I've delivered.
-        </p>
-      </motion.div>
+        Case Studies
+      </motion.h2>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        {featuredProjects.map((project, index) => (
-          <motion.div
-            key={project.title}
-            initial={{ opacity: 0, x: 20 }}
-            animate={animatedItems[index] ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.3 }}
-          >
-            <FeatureCard {...project} />
-          </motion.div>
-        ))}
+      <div className="space-y-6">
+        {featuredProjects.map((project, index) => {
+          const isExternal = project.link.startsWith('http');
+          return (
+            <motion.a
+              key={project.title}
+              href={project.link}
+              target={isExternal ? "_blank" : undefined}
+              rel={isExternal ? "noopener noreferrer" : undefined}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.4, delay: index * 0.1 }}
+              className="group block border border-gray-300 hover:border-gray-900 transition-colors"
+            >
+            <div className="grid md:grid-cols-[2fr_1fr] gap-0">
+              {/* Content */}
+              <div className="p-6 md:p-8 border-b md:border-b-0 md:border-r border-gray-300">
+                <div className="flex items-baseline justify-between mb-4">
+                  <h3 className="text-2xl font-bold text-gray-900">{project.title}</h3>
+                  <span className="text-xs font-medium text-gray-500 uppercase tracking-wide ml-4">{project.type}</span>
+                </div>
+                <p className="text-gray-700 leading-relaxed mb-4">
+                  {project.description}
+                </p>
+                <div className="flex items-center justify-between">
+                  <div className="text-sm text-gray-500">{project.date}</div>
+                  <div className="flex gap-2">
+                    {project.wipLink && (
+                      <a
+                        href={project.wipLink}
+                        onClick={(e) => e.stopPropagation()}
+                        className="text-sm text-gray-700 border border-gray-300 px-4 py-2 hover:border-gray-900 hover:bg-gray-50 transition-colors"
+                      >
+                        WIP →
+                      </a>
+                    )}
+                    <span className="text-sm text-gray-700 border border-gray-300 px-4 py-2 group-hover:border-gray-900 group-hover:bg-gray-50 transition-colors">
+                      Open Deck →
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Image */}
+              <div className="aspect-[4/3] md:aspect-auto bg-gray-100 overflow-hidden">
+                {project.image && (
+                  <img
+                    src={project.image}
+                    alt={project.title}
+                    className="w-full h-full object-cover group-hover:opacity-90 transition-opacity"
+                  />
+                )}
+              </div>
+            </div>
+          </motion.a>
+          );
+        })}
       </div>
     </section>
   );
