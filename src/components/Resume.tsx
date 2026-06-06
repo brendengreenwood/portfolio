@@ -98,64 +98,76 @@ export default function Resume() {
         <a
           href="/assets/Brenden Greenwood Resume - Dec 2025 (2).pdf"
           download
-          className="text-sm text-gray-700 border border-gray-300 px-4 py-2 hover:border-gray-900 hover:bg-gray-50 transition-colors"
+          className="text-sm text-gray-700 border border-gray-300 px-4 py-2 hover:border-gray-900 hover:bg-gray-50 transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-900"
         >
           Download PDF Resume
         </a>
       </div>
 
       <div className="border border-gray-300">
-        {experience.map((job, index) => (
-          <motion.div
-            key={index}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.4, delay: index * 0.1 }}
-            className={index > 0 ? "border-t border-gray-300" : ""}
-          >
-            <button
-              onClick={() => setExpandedIndex(expandedIndex === index ? null : index)}
-              className="w-full text-left p-6 hover:bg-gray-50 transition-colors"
+        {experience.map((job, index) => {
+          const isExpanded = expandedIndex === index;
+          const panelId = `resume-panel-${index}`;
+          const headingId = `resume-heading-${index}`;
+
+          return (
+            <motion.div
+              key={`${job.company}-${job.period}`}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.4, delay: index * 0.1 }}
+              className={index > 0 ? "border-t border-gray-300" : ""}
             >
-              <div className="grid md:grid-cols-[2fr_1fr_auto] gap-4 items-baseline">
-                <div>
-                  <h3 className="font-semibold text-gray-900">{job.role}</h3>
-                  <div className="text-sm text-gray-600">{job.company}</div>
-                </div>
-                <div className="text-sm text-gray-500">{job.period}</div>
-                <div className="text-gray-500">
-                  {expandedIndex === index ? "−" : "+"}
-                </div>
-              </div>
-            </button>
-
-            {expandedIndex === index && (
-              <motion.div
-                initial={{ height: 0, opacity: 0 }}
-                animate={{ height: "auto", opacity: 1 }}
-                exit={{ height: 0, opacity: 0 }}
-                transition={{ duration: 0.2, ease: "easeOut" }}
-                className="px-6 pb-6 border-t border-gray-200"
+              <button
+                id={headingId}
+                onClick={() => setExpandedIndex(isExpanded ? null : index)}
+                aria-expanded={isExpanded}
+                aria-controls={panelId}
+                className="w-full text-left p-6 hover:bg-gray-50 transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-900"
               >
-                <ul className="space-y-2 mt-4">
-                  {job.highlights.map((highlight, i) => {
-                    const isSubBullet = highlight.startsWith("•");
-                    const isHeader = !isSubBullet && highlight.endsWith(":");
+                <div className="grid md:grid-cols-[2fr_1fr_auto] gap-4 items-baseline">
+                  <div>
+                    <h3 className="font-semibold text-gray-900">{job.role}</h3>
+                    <div className="text-sm text-gray-600">{job.company}</div>
+                  </div>
+                  <div className="text-sm text-gray-500">{job.period}</div>
+                  <div className="text-gray-500" aria-hidden="true">
+                    {isExpanded ? "−" : "+"}
+                  </div>
+                </div>
+              </button>
 
-                    return (
-                      <li key={i} className={`text-sm text-gray-700 flex gap-3 ${isSubBullet ? "ml-6" : ""}`}>
-                        {!isHeader && <span className="text-gray-400 flex-shrink-0">•</span>}
-                        <span className={isHeader ? "font-semibold" : ""}>
-                          {isSubBullet ? highlight.substring(2) : highlight}
-                        </span>
-                      </li>
-                    );
-                  })}
-                </ul>
-              </motion.div>
-            )}
-          </motion.div>
-        ))}
+              {isExpanded && (
+                <motion.div
+                  id={panelId}
+                  role="region"
+                  aria-labelledby={headingId}
+                  initial={{ height: 0, opacity: 0 }}
+                  animate={{ height: "auto", opacity: 1 }}
+                  exit={{ height: 0, opacity: 0 }}
+                  transition={{ duration: 0.2, ease: "easeOut" }}
+                  className="px-6 pb-6 border-t border-gray-200"
+                >
+                  <ul className="space-y-2 mt-4">
+                    {job.highlights.map((highlight, i) => {
+                      const isSubBullet = highlight.startsWith("•");
+                      const isHeader = !isSubBullet && highlight.endsWith(":");
+
+                      return (
+                        <li key={i} className={`text-sm text-gray-700 flex gap-3 ${isSubBullet ? "ml-6" : ""}`}>
+                          {!isHeader && <span className="text-gray-400 flex-shrink-0" aria-hidden="true">•</span>}
+                          <span className={isHeader ? "font-semibold" : ""}>
+                            {isSubBullet ? highlight.substring(2) : highlight}
+                          </span>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </motion.div>
+              )}
+            </motion.div>
+          );
+        })}
       </div>
 
       {/* Skills */}
@@ -180,9 +192,9 @@ export default function Resume() {
               "Journey Mapping",
               "Workshop Facilitation",
               "Prompt Engineering for UX"
-            ].map((skill, i) => (
+            ].map((skill) => (
               <span
-                key={i}
+                key={skill}
                 className="px-3 py-1 bg-gray-100 text-gray-700 text-sm font-medium border border-gray-300"
               >
                 {skill}
@@ -207,9 +219,9 @@ export default function Resume() {
               "Agile/Scrum",
               "A/B Testing",
               "User Research"
-            ].map((skill, i) => (
+            ].map((skill) => (
               <span
-                key={i}
+                key={skill}
                 className="px-3 py-1 bg-gray-100 text-gray-700 text-sm font-medium border border-gray-300"
               >
                 {skill}

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState, useId } from 'react';
 import { sounds } from '../utils/sounds';
 
 interface SocialButtonProps {
@@ -10,6 +10,7 @@ interface SocialButtonProps {
 
 export default function SocialButton({ href, label, external = true, children }: SocialButtonProps) {
   const [showTooltip, setShowTooltip] = useState(false);
+  const tooltipId = useId();
 
   const handleMouseEnter = () => {
     setShowTooltip(true);
@@ -20,16 +21,21 @@ export default function SocialButton({ href, label, external = true, children }:
     <div className="relative">
       <a 
         href={href}
-        className="w-10 h-10 flex items-center justify-center rounded-full text-gray-700 hover:bg-gray-200 transition-colors relative"
+        className="w-11 h-11 flex items-center justify-center rounded-full text-gray-700 hover:bg-gray-200 transition-colors relative focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-900"
         target={external ? "_blank" : undefined}
         rel={external ? "noopener noreferrer" : undefined}
         aria-label={label}
+        aria-describedby={showTooltip ? tooltipId : undefined}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={() => setShowTooltip(false)}
+        onFocus={handleMouseEnter}
+        onBlur={() => setShowTooltip(false)}
       >
         {children}
       </a>
       <div 
+        id={tooltipId}
+        role="tooltip"
         className={`
           absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 
           transition-all duration-200 ease-out
@@ -38,7 +44,7 @@ export default function SocialButton({ href, label, external = true, children }:
       >
         <div className="px-2 py-1 text-sm text-white bg-gray-900 rounded whitespace-nowrap">
           {label}
-          <div className="absolute top-full left-1/2 transform -translate-x-1/2 -mt-1">
+          <div className="absolute top-full left-1/2 transform -translate-x-1/2 -mt-1" aria-hidden="true">
             <div className="border-4 border-transparent border-t-gray-900" />
           </div>
         </div>

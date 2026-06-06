@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { motion } from "framer-motion";
 
 const sections = [
@@ -12,39 +12,49 @@ export default function Navigation() {
   const [isFixed, setIsFixed] = useState(false);
   const [activeSection, setActiveSection] = useState("");
 
-  useEffect(() => {
-    const handleScroll = () => {
-      // Check if navigation should be fixed
-      const heroHeight = document.querySelector("header")?.offsetHeight || 0;
-      setIsFixed(window.scrollY > heroHeight);
+  const handleScroll = useCallback(() => {
+    const heroHeight = document.querySelector("header")?.offsetHeight || 0;
+    setIsFixed(window.scrollY > heroHeight);
 
-      // Determine active section based on scroll position
-      const scrollPosition = window.scrollY + 100;
+    const scrollPosition = window.scrollY + 100;
 
-      for (const section of sections) {
-        const element = document.getElementById(section.id);
-        if (element) {
-          const offsetTop = element.offsetTop;
-          const offsetBottom = offsetTop + element.offsetHeight;
+    for (const section of sections) {
+      const element = document.getElementById(section.id);
+      if (element) {
+        const offsetTop = element.offsetTop;
+        const offsetBottom = offsetTop + element.offsetHeight;
 
-          if (scrollPosition >= offsetTop && scrollPosition < offsetBottom) {
-            setActiveSection(section.id);
-            break;
-          }
+        if (scrollPosition >= offsetTop && scrollPosition < offsetBottom) {
+          setActiveSection(section.id);
+          break;
         }
+      }
+    }
+  }, []);
+
+  useEffect(() => {
+    let ticking = false;
+
+    const throttledScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          handleScroll();
+          ticking = false;
+        });
+        ticking = true;
       }
     };
 
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+    window.addEventListener("scroll", throttledScroll, { passive: true });
+    return () => window.removeEventListener("scroll", throttledScroll);
+  }, [handleScroll]);
 
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
     const nav = document.querySelector("nav");
     if (element && nav) {
       const navHeight = nav.offsetHeight;
-      const elementPosition = element.offsetTop - navHeight - 16; // Add small padding
+      const elementPosition = element.offsetTop - navHeight - 16;
       window.scrollTo({ top: elementPosition, behavior: "smooth" });
     }
   };
@@ -54,17 +64,21 @@ export default function Navigation() {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.4 }}
+      aria-label="Section navigation"
       className={`bg-white border-b border-gray-300 transition-all duration-200 ${
         isFixed ? "fixed top-0 left-0 right-0 z-50 shadow-sm" : ""
       }`}
     >
       <div className="max-w-6xl mx-auto px-4 md:px-6">
-        <div className="flex gap-1 py-3">
+        <div className="flex gap-1 py-3" role="tablist" aria-label="Page sections">
           {sections.map((section) => (
             <button
               key={section.id}
+              role="tab"
+              aria-selected={activeSection === section.id}
+              aria-controls={section.id}
               onClick={() => scrollToSection(section.id)}
-              className={`px-4 py-2 text-sm font-medium transition-colors ${
+              className={`px-4 py-2 text-sm font-medium transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-900 ${
                 activeSection === section.id
                   ? "text-gray-900 bg-gray-100 border border-gray-300"
                   : "text-gray-600 hover:text-gray-900 hover:bg-gray-50"

@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import { useState, useRef, useId } from 'react';
 import { ChevronDown } from 'lucide-react';
 import { sounds } from '../utils/sounds';
 
@@ -19,6 +19,9 @@ export default function Accordion({
 }: AccordionProps) {
   const [isOpen, setIsOpen] = useState(defaultOpen);
   const contentRef = useRef<HTMLDivElement>(null);
+  const id = useId();
+  const headingId = `${id}-heading`;
+  const panelId = `${id}-panel`;
 
   const handleToggle = () => {
     const newIsOpen = !isOpen;
@@ -31,20 +34,26 @@ export default function Accordion({
     onOpenChange?.(newIsOpen);
   };
 
-  const handleMouseEnter = () => {
-    sounds.hover();
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      handleToggle();
+    }
   };
 
   return (
     <div className="rounded-md border border-gray-200 transition-colors duration-200 hover:border-gray-300">
       <button
+        id={headingId}
         onClick={handleToggle}
-        onMouseEnter={handleMouseEnter}
-        className="w-full px-4 md:px-6 py-4 md:py-6 flex items-start text-left gap-3 md:gap-4"
+        onKeyDown={handleKeyDown}
+        aria-expanded={isOpen}
+        aria-controls={panelId}
+        className="w-full px-4 md:px-6 py-4 md:py-6 flex items-start text-left gap-3 md:gap-4 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-900"
       >
         <div className="pt-1">
           <div className={`transform transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`}>
-            <ChevronDown className="text-gray-500" size={20} />
+            <ChevronDown className="text-gray-500" size={20} aria-hidden="true" />
           </div>
         </div>
         <div>
@@ -53,6 +62,10 @@ export default function Accordion({
         </div>
       </button>
       <div 
+        id={panelId}
+        role="region"
+        aria-labelledby={headingId}
+        hidden={!isOpen}
         className={`transition-all duration-300 ease-in-out ${isOpen ? 'opacity-100' : 'opacity-0 h-0 overflow-hidden'}`}
         style={{ 
           height: isOpen ? contentRef.current?.scrollHeight + 'px' : '0',

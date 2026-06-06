@@ -27,7 +27,7 @@ export default function AIPrototypes() {
           >
             <div className="flex items-baseline justify-between mb-2">
               <h3 className="font-semibold text-gray-900">{project.title}</h3>
-              <span className="text-xs text-gray-500 ml-4">2024</span>
+              <span className="text-xs text-gray-500 ml-4">{project.date}</span>
             </div>
             <p className="text-sm text-gray-600 leading-relaxed">
               {project.description}
