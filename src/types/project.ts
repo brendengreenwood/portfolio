@@ -6,4 +6,5 @@ export interface Project {
   link: string;
   wipLink?: string;
   date: string;
+  requiresEmail?: boolean;
 }

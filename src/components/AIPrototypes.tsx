@@ -1,7 +1,22 @@
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { aiProjects } from "../data/projects";
+import EmailGate from "./EmailGate";
+import type { Project } from "../types/project";
+
+const STORAGE_KEY = "portfolio:lead-email";
 
 export default function AIPrototypes() {
+  const [gateProject, setGateProject] = useState<Project | null>(null);
+
+  const handleClick = (project: Project, e: React.MouseEvent) => {
+    if (!project.requiresEmail) return;
+    const already = typeof window !== "undefined" ? window.localStorage.getItem(STORAGE_KEY) : null;
+    if (already) return;
+    e.preventDefault();
+    setGateProject(project);
+  };
+
   return (
     <section className="max-w-6xl mx-auto px-4 md:px-6">
       <motion.h2
@@ -20,6 +35,7 @@ export default function AIPrototypes() {
             href={project.link}
             target="_blank"
             rel="noopener noreferrer"
+            onClick={(e) => handleClick(project, e)}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.4, delay: index * 0.05 }}
@@ -35,6 +51,14 @@ export default function AIPrototypes() {
           </motion.a>
         ))}
       </div>
+
+      <EmailGate
+        open={gateProject !== null}
+        source={gateProject ? `prototype:${gateProject.title}` : ""}
+        destination={gateProject?.link ?? ""}
+        title={gateProject ? `Open ${gateProject.title}` : ""}
+        onClose={() => setGateProject(null)}
+      />
     </section>
   );
 }

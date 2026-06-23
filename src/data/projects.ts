@@ -7,7 +7,8 @@ export const aiProjects: Project[] = [
     description: "Internal tool for mapping complex multi-tool workflows. Swimlane canvas with React Flow + ELK auto-layout, versioned journey snapshots, and Mastra agents that reason about the workflow graph.",
     image: "",
     link: "https://journey-mapper-demo.netlify.app",
-    date: "2026"
+    date: "2026",
+    requiresEmail: true
   },
   {
     type: "AI Prototype",
