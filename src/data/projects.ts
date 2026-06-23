@@ -3,6 +3,22 @@ import { Project } from '../types/project';
 export const aiProjects: Project[] = [
   {
     type: "AI Prototype",
+    title: "Journey Mapper",
+    description: "Internal tool for mapping complex multi-tool workflows. Swimlane canvas with React Flow + ELK auto-layout, versioned journey snapshots, and Mastra agents that reason about the workflow graph.",
+    image: "",
+    link: "https://journey-mapper-demo.netlify.app",
+    date: "2026"
+  },
+  {
+    type: "AI Prototype",
+    title: "Auto·Battler",
+    description: "A Tome of Hex & Sigil — hex-grid duelling game styled like an illuminated manuscript. Vanilla ES modules, Three.js board, Howler.js sound. No build step.",
+    image: "",
+    link: "https://auto-battler.netlify.app",
+    date: "2026"
+  },
+  {
+    type: "AI Prototype",
     title: "Task Analyzer",
     description: "Experimenting with chat assistant AI agents to analyze and break down complex tasks into actionable steps.",
     image: "",
