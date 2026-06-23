@@ -3,6 +3,18 @@ import { useState } from "react";
 
 const experience = [
   {
+    role: "Senior Product Designer (Contract)",
+    company: "Cargill",
+    period: "Feb 2026 – Present",
+    highlights: [
+      "Leading 0-to-1 design of a greenfield market intelligence and pricing decision-support platform for Cargill's grain trading business — scenario modeling, ML-backed pricing recommendations, and real-time bid context for traders and field teams",
+      "Rebuilt a data science POC as a production-grade React/TypeScript frontend, establishing the platform's working foundation and design system architecture; validated designs in working code rather than static mocks",
+      "Designed a novel map-based competitive territory system modeling bid competition and market reach through geospatial contour visualization (MapLibre GL, d3)",
+      "Drove foundational discovery — in-depth interviews across traders and field originators — and built an AI-assisted research synthesis pipeline that turned transcripts into a living domain ontology, service blueprint, and personas",
+      "Advanced the org's AI-enabled design practice by building CLI and MCP tooling that made the enterprise design system consumable by AI coding agents, ahead of the broader design community"
+    ]
+  },
+  {
     role: "Senior Product Designer",
     company: "United Airlines",
     period: "Jan 2025 – Sept 2025",
@@ -81,11 +93,79 @@ const experience = [
   }
 ];
 
+const skillGroups = [
+  {
+    label: "Design",
+    skills: [
+      "User-Centered Design",
+      "Information Architecture",
+      "Design Systems",
+      "Wireframing",
+      "Interaction Design",
+      "Systems Thinking",
+      "Journey Mapping",
+      "WCAG Accessibility",
+      "Data Visualization",
+      "Stakeholder Management",
+      "Workshop Facilitation"
+    ]
+  },
+  {
+    label: "AI-Native Design",
+    skills: [
+      "Claude Code",
+      "Cursor",
+      "MCP Server Development",
+      "Mastra (Agent Frameworks)",
+      "v0"
+    ]
+  },
+  {
+    label: "Development",
+    skills: [
+      "React",
+      "TypeScript",
+      "Tailwind / shadcn",
+      "HTML5",
+      "CSS3",
+      "MapLibre GL",
+      "deck.gl",
+      "d3",
+      "Responsive Web Design"
+    ]
+  },
+  {
+    label: "Methods",
+    skills: [
+      "Agile / Scrum",
+      "A/B Testing",
+      "Usability Testing",
+      "User Research",
+      "Discovery & Strategy"
+    ]
+  }
+];
+
 export default function Resume() {
   const [expandedIndex, setExpandedIndex] = useState<number | null>(0);
 
   return (
     <section className="max-w-6xl mx-auto px-4 md:px-6">
+      {/* Profile */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.4 }}
+        className="mb-12"
+      >
+        <h2 className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-4">
+          Profile
+        </h2>
+        <p className="text-base text-gray-700 leading-relaxed max-w-3xl">
+          Product designer with 13+ years simplifying complex enterprise systems, with repeated success leading 0-to-1 platforms at Fortune 500 companies including Target and Cargill. Operates at the intersection of product design, systems architecture, and AI enablement — ships working code and compresses discovery-to-validation cycles from weeks to days.
+        </p>
+      </motion.div>
+
       <div className="flex items-baseline justify-between mb-6">
         <motion.h2
           initial={{ opacity: 0 }}
@@ -96,7 +176,7 @@ export default function Resume() {
           Experience
         </motion.h2>
         <a
-          href="/assets/Brenden Greenwood Resume - Dec 2025 (2).pdf"
+          href="/assets/Brenden_Greenwood_Resume_Jun2026.pdf"
           download
           className="text-sm text-gray-700 border border-gray-300 px-4 py-2 hover:border-gray-900 hover:bg-gray-50 transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-900"
         >
@@ -175,60 +255,28 @@ export default function Resume() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.4, delay: 0.5 }}
-        className="mt-12 grid md:grid-cols-2 gap-8"
+        className="mt-12 space-y-8"
       >
-        <div>
-          <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-4">
-            Product Design
-          </h3>
-          <div className="flex flex-wrap gap-2">
-            {[
-              "User-Centered Design",
-              "Information Architecture",
-              "Design Systems",
-              "Systems Thinking",
-              "WCAG Accessibility",
-              "Data Visualization",
-              "Journey Mapping",
-              "Workshop Facilitation",
-              "Prompt Engineering for UX"
-            ].map((skill) => (
-              <span
-                key={skill}
-                className="px-3 py-1 bg-gray-100 text-gray-700 text-sm font-medium border border-gray-300"
-              >
-                {skill}
-              </span>
-            ))}
+        <h2 className="text-xs font-semibold text-gray-500 uppercase tracking-wider">
+          Skills
+        </h2>
+        {skillGroups.map((group) => (
+          <div key={group.label}>
+            <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-4">
+              {group.label}
+            </h3>
+            <div className="flex flex-wrap gap-2">
+              {group.skills.map((skill) => (
+                <span
+                  key={skill}
+                  className="px-3 py-1 bg-gray-100 text-gray-700 text-sm font-medium border border-gray-300"
+                >
+                  {skill}
+                </span>
+              ))}
+            </div>
           </div>
-        </div>
-
-        <div>
-          <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-4">
-            Tools & Methods
-          </h3>
-          <div className="flex flex-wrap gap-2">
-            {[
-              "Figma",
-              "Adobe Creative Cloud",
-              "React",
-              "HTML/CSS",
-              "Cursor",
-              "v0",
-              "Claude",
-              "Agile/Scrum",
-              "A/B Testing",
-              "User Research"
-            ].map((skill) => (
-              <span
-                key={skill}
-                className="px-3 py-1 bg-gray-100 text-gray-700 text-sm font-medium border border-gray-300"
-              >
-                {skill}
-              </span>
-            ))}
-          </div>
-        </div>
+        ))}
       </motion.div>
     </section>
   );

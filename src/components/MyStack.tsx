@@ -2,14 +2,18 @@ import { motion } from 'framer-motion';
 
 const tools = [
   { name: "Figma", link: "https://figma.com" },
+  { name: "Adobe Creative Cloud", link: "https://www.adobe.com/creativecloud.html" },
   { name: "Notion", link: "https://notion.so" },
   { name: "Linear", link: "https://linear.app" },
-  { name: "Claude Code", link: "https://claude.ai/claude-code" },
   { name: "Jira", link: "https://www.atlassian.com/software/jira" },
   { name: "Confluence", link: "https://www.atlassian.com/software/confluence" },
+  { name: "Mixpanel", link: "https://mixpanel.com" },
+  { name: "Google Analytics", link: "https://analytics.google.com" },
+  { name: "Claude Code", link: "https://claude.ai/claude-code" },
+  { name: "Cursor", link: "https://cursor.com" },
+  { name: "v0", link: "https://v0.dev" },
   { name: "Replit", link: "https://replit.com" },
   { name: "Bolt.new", link: "https://bolt.new" },
-  { name: "v0", link: "https://v0.dev" },
   { name: "ChatGPT", link: "https://chat.openai.com" }
 ];
 

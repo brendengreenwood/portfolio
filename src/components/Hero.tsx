@@ -45,7 +45,7 @@ export default function Hero() {
               className="text-sm text-gray-600 leading-relaxed"
             >
               I specialize in designing complex enterprise tools and scalable design systems.
-              With over 10 years of experience at companies like Target and United Airlines,
+              With over 13 years of experience at companies like Cargill, United Airlines, and Target,
               I transform complicated workflows into intuitive, data-dense interfaces that users love.
             </motion.p>
           </div>
@@ -62,7 +62,7 @@ export default function Hero() {
             </div>
             <div className="flex justify-between py-1 border-b border-gray-200">
               <span className="text-gray-500">Experience</span>
-              <span className="text-gray-900 font-medium">10+ years</span>
+              <span className="text-gray-900 font-medium">13+ years</span>
             </div>
             <div className="flex justify-between py-1 border-b border-gray-200">
               <span className="text-gray-500">Status</span>
