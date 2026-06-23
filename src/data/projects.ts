@@ -3,6 +3,14 @@ import { Project } from '../types/project';
 export const aiProjects: Project[] = [
   {
     type: "AI Prototype",
+    title: "Hank's Homestead",
+    description: "A Three.js farming game — grow your crops, sell them at market, and reinvest the profits to expand your homestead.",
+    image: "",
+    link: "https://hanks-homestead.netlify.app/",
+    date: "2026"
+  },
+  {
+    type: "AI Prototype",
     title: "Journey Mapper",
     description: "Internal tool for mapping complex multi-tool workflows. Swimlane canvas with React Flow + ELK auto-layout, versioned journey snapshots, and Mastra agents that reason about the workflow graph.",
     image: "",
